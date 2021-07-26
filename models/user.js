@@ -1,19 +1,19 @@
-const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const isEmail = require('validator/lib/isEmail');
 
 const userSchema = new mongoose.Schema({
   name: { // имя пользователя
-    type: String, // это строка
+    type: String,
     required: true,
-    minlength: 2, // минимум 2 символа
-    maxlength: 30, // максимум 30 символов
+    minlength: 2,
+    maxlength: 30,
   },
 
   email: { // email пользователя
     type: String,
-    unique: true,
-    required: true,
+    unique: true, // уникальное
+    required: true, // обязательное
     validate: {
       validator: (v) => isEmail(v),
       message: 'Неправильный формат почты',
@@ -29,11 +29,13 @@ const userSchema = new mongoose.Schema({
 
 });
 
-// Дополняем объект userSchema методом findUserByCredentials.
-// Метод findUserByCredentials находит пользователя в БД по email,
-// и сравнивает полученный пароль с сохраненным
-// Функция findUserByCredentials не должна быть стрелочной!!!
-userSchema.statics.findUserByCredentials = function (email, password) {
+/** ****************************************************************
+ * Дополняем объект userSchema методом findUserByCredentials.      *
+ * Метод findUserByCredentials находит пользователя в БД по email, *
+ * и сравнивает полученный пароль с сохраненным                    *
+ * Функция findUserByCredentials не должна быть стрелочной!!!      *
+ ***************************************************************** */
+userSchema.statics.findUserByCredentials = function noName(email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       // не нашёлся — отклоняем промис

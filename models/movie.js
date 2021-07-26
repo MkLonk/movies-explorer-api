@@ -3,17 +3,17 @@ const isURL = require('validator/lib/isURL');
 
 const movieSchema = new mongoose.Schema({
   country: { // страна создания фильма
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
-    minlength: 2, // минимум 2 символа
-    maxlength: 30, // максимум 30 символов
+    minlength: 2,
+    maxlength: 30,
   },
 
   director: { // режиссёр фильма
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
-    minlength: 2, // минимум 2 символа
-    maxlength: 30, // максимум 30 символов
+    minlength: 2,
+    maxlength: 30,
   },
 
   duration: { // длительность фильма
@@ -22,21 +22,21 @@ const movieSchema = new mongoose.Schema({
   },
 
   year: { // год выпуска фильма
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
-    minlength: 2, // минимум 2 символа
-    maxlength: 30, // максимум 30 символов
+    minlength: 2,
+    maxlength: 12,
   },
 
   description: { // описание фильма
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
-    minlength: 2, // минимум 2 символа
-    maxlength: 256, // максимум 256 символов
+    minlength: 2,
+    maxlength: 255,
   },
 
   image: { // ссылка на постер к фильму
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
     validate: {
       validator: (v) => isURL(v),
@@ -45,7 +45,7 @@ const movieSchema = new mongoose.Schema({
   },
 
   trailer: { // ссылка на трейлер фильма
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
     validate: {
       validator: (v) => isURL(v),
@@ -54,7 +54,7 @@ const movieSchema = new mongoose.Schema({
   },
 
   thumbnail: { // миниатюрное изображение постера к фильму
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
     validate: {
       validator: (v) => isURL(v),
@@ -74,17 +74,17 @@ const movieSchema = new mongoose.Schema({
   },
 
   nameRU: { // название фильма на русском языке
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
-    minlength: 2, // минимум 2 символа
-    maxlength: 30, // максимум 30 символов
+    minlength: 2,
+    maxlength: 30,
   },
 
   nameEN: { // название фильма на английском языке
-    type: String, // это строка
+    type: String,
     required: true, // обязательное поле
-    minlength: 2, // минимум 2 символа
-    maxlength: 30, // максимум 30 символов
+    minlength: 2,
+    maxlength: 30,
   },
 });
 

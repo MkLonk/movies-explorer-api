@@ -1,5 +1,4 @@
 const { Joi } = require('celebrate');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const validator = require('validator');
 
 const metIsURL = (value) => {
@@ -9,6 +8,14 @@ const metIsURL = (value) => {
   throw new Error('URL validation err');
 };
 
+const metIsEmail = (value) => {
+  if (validator.isEmail(value)) {
+    return value;
+  }
+  throw new Error('email validation err');
+};
+
+// сет валидации запросов CreateUser
 const validSetCreateUser = {
   // валидируем params
   params: Joi.object().keys({}),
@@ -26,6 +33,7 @@ const validSetCreateUser = {
   }),
 };
 
+// сет валидации запросов PatchUser
 const validSetPatchUser = {
   // валидируем params
   params: Joi.object().keys({}),
@@ -37,27 +45,13 @@ const validSetPatchUser = {
   query: Joi.object().keys({}),
   // валидируем body
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    about: Joi.string().min(2).max(30),
+    name: Joi.string().min(2).max(30),
+    email: Joi.string().min(2).custom(metIsEmail),
   }),
 };
 
-const validSetPatchAvatar = {
-  // валидируем params
-  params: Joi.object().keys({}),
-  // валидируем headers
-  headers: Joi.object().keys({
-    authorization: Joi.string().required().min(179).max(179),
-  }).unknown(),
-  // валидируем query
-  query: Joi.object().keys({}),
-  // валидируем body
-  body: Joi.object().keys({
-    avatar: Joi.string().required().custom(metIsURL),
-  }),
-};
-
-const validSetGetUsers = {
+// сет валидации запросов GetUsers
+const validSetGetUser = {
   // валидируем params
   params: Joi.object().keys({}),
   // валидируем headers
@@ -70,7 +64,48 @@ const validSetGetUsers = {
   body: Joi.object().keys({}),
 };
 
-const validSetGetUserId = {
+// сет валидации запросов GetMovies
+const validSetGetMovies = {
+  // валидируем params
+  params: Joi.object().keys({}),
+  // валидируем headers
+  headers: Joi.object().keys({
+    authorization: Joi.string().required().min(179).max(179),
+  }).unknown(),
+  // валидируем query
+  query: Joi.object().keys({}),
+  // валидируем body
+  body: Joi.object().keys({}),
+};
+
+// сет валидации запросов CreateMovies
+const validSetCreateMovies = {
+  // валидируем params
+  params: Joi.object().keys({}),
+  // валидируем headers
+  headers: Joi.object().keys({
+    authorization: Joi.string().required().min(179).max(179),
+  }).unknown(),
+  // валидируем query
+  query: Joi.object().keys({}),
+  // валидируем body
+  body: Joi.object().keys({
+    country: Joi.string().required().min(2).max(30),
+    director: Joi.string().required().min(2).max(30),
+    duration: Joi.number().required(),
+    year: Joi.string().required().min(2).max(12),
+    description: Joi.string().required().min(2).max(255),
+    image: Joi.string().required().custom(metIsURL),
+    trailer: Joi.string().required().custom(metIsURL),
+    thumbnail: Joi.string().required().custom(metIsURL),
+    movieId: Joi.string().required().min(2).max(30), // Joi.string().length(24).hex(),
+    nameRU: Joi.string().required().min(2).max(30),
+    nameEN: Joi.string().required().min(2).max(30),
+  }),
+};
+
+// сет валидации запросов GetMovies
+const validSetDelMovies = {
   // валидируем params
   params: Joi.object().keys({
     id: Joi.string().length(24).hex(),
@@ -83,59 +118,13 @@ const validSetGetUserId = {
   query: Joi.object().keys({}),
   // валидируем body
   body: Joi.object().keys({}),
-};
-
-const validSetGetCards = {
-  // валидируем params
-  params: Joi.object().keys({}),
-  // валидируем headers
-  headers: Joi.object().keys({
-    authorization: Joi.string().required().min(179).max(179),
-  }).unknown(),
-  // валидируем query
-  query: Joi.object().keys({}),
-  // валидируем body
-  body: Joi.object().keys({}),
-};
-
-const validSetGetCardId = {
-  // валидируем params
-  params: Joi.object().keys({
-    id: Joi.string().length(24).hex(),
-  }),
-  // валидируем headers
-  headers: Joi.object().keys({
-    authorization: Joi.string().required().min(179).max(179),
-  }).unknown(),
-  // валидируем query
-  query: Joi.object().keys({}),
-  // валидируем body
-  body: Joi.object().keys({}),
-};
-
-const validSetCreateCard = {
-  // валидируем params
-  params: Joi.object().keys({}),
-  // валидируем headers
-  headers: Joi.object().keys({
-    authorization: Joi.string().required().min(179).max(179),
-  }).unknown(),
-  // валидируем query
-  query: Joi.object().keys({}),
-  // валидируем body
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().custom(metIsURL),
-  }),
 };
 
 module.exports = {
   validSetCreateUser,
   validSetPatchUser,
-  validSetPatchAvatar,
-  validSetGetUsers,
-  validSetGetUserId,
-  validSetGetCards,
-  validSetGetCardId,
-  validSetCreateCard,
+  validSetGetUser,
+  validSetGetMovies,
+  validSetCreateMovies,
+  validSetDelMovies,
 };
