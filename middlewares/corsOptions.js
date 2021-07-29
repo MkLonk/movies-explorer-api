@@ -1,6 +1,6 @@
 const whitelist = [
-  'http://mesto.lonk.nomoredomains.club',
-  'https://mesto.lonk.nomoredomains.club',
+  'http://diploma.mihailov.nomoredomains.club',
+  'https://diploma.mihailov.nomoredomains.club',
   'http://localhost:3000',
   'https://localhost:3000',
 ];

@@ -5,11 +5,11 @@ const helmet = require('helmet');
 const express = require('express');
 const { celebrate, errors } = require('celebrate');
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 
 const myErrors = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const { corsOptions } = require('./middlewares/corsOptions');
+const { corsOptions } = require('./middlewares/corsOptions');
 const { validSetCreateUser } = require('./middlewares/validSets');
 const limiter = require('./middlewares/rateLimit');
 const auth = require('./middlewares/auth');
@@ -39,7 +39,7 @@ app.use(requestLogger);
 app.use(errorLogger); // подключаем логгер ошибок
 
 // CORS настройка | для пропуска всех сайтов - app.use(cors())
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // защитные мидлвары
 app.use(helmet());
