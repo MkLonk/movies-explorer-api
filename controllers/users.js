@@ -52,7 +52,7 @@ function createUser(req, res, next) {
     name, email, password,
   } = req.body;
 
-  bcrypt.hash(password, SALT_ROUNDS) // хешируем пароль
+  bcrypt.hash(password, Number(SALT_ROUNDS)) // хешируем пароль
     .then((hashPass) => User.create({
       name, email, password: hashPass,
     }))
