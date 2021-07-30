@@ -9,7 +9,7 @@ const cors = require('cors');
 
 const myErrors = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { corsOptions } = require('./middlewares/corsOptions');
+// const { corsOptions } = require('./middlewares/corsOptions'); // включить когда будет готов фронт
 const { validSetCreateUser } = require('./middlewares/validSets');
 const limiter = require('./middlewares/rateLimit');
 const auth = require('./middlewares/auth');
@@ -38,8 +38,8 @@ mongoose.connect(MONGO_URI, {
 app.use(requestLogger);
 app.use(errorLogger); // подключаем логгер ошибок
 
-// CORS настройка | для пропуска всех сайтов - app.use(cors())
-app.use(cors(corsOptions));
+// CORS настройка | для всех - app.use(cors()) | для выбранных - app.use(cors(corsOptions));
+app.use(cors()); // временное значение, изменить когда будет фронтенд
 
 // защитные мидлвары
 app.use(helmet());
