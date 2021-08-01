@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const { celebrate } = require('celebrate');
 
-const { validSetPatchUser, validSetGetUser } = require('../middlewares/validSets');
-
+const { validSetPatchUser } = require('../middlewares/validSets');
 const { patchMe, getMe } = require('../controllers/users');
 
-router.get('/me', celebrate(validSetGetUser), getMe); // — найти пользователя
-router.patch('/me', celebrate(validSetPatchUser), patchMe); // — обновить пользователя
+router.get('/me', getMe); // — авторизованный пользователь
+router.patch('/me', celebrate(validSetPatchUser), patchMe); // — обновить данные авторизованный пользователя
 
 module.exports = router;

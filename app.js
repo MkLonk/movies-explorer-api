@@ -1,42 +1,28 @@
 // Импрорты
-require('dotenv').config();
-
 const helmet = require('helmet');
 const express = require('express');
-const { celebrate, errors } = require('celebrate');
+const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const { APP_PORT, DB_URL, DB_CONFIG } = require('./utils/config');
 const myErrors = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 // const { corsOptions } = require('./middlewares/corsOptions'); // включить когда будет готов фронт
-const { validSetCreateUser } = require('./middlewares/validSets');
 const limiter = require('./middlewares/rateLimit');
-const auth = require('./middlewares/auth');
-
 const routes = require('./routes');
-const { login, createUser } = require('./controllers/users');
-
-// константы .env
-const {
-  PORT = 3000,
-  MONGO_URI = 'mongodb://localhost:27017/bitfilmsdb',
-} = process.env;
 
 // создаем app на экспрессе
 const app = express();
 
 // подключаемся к серверу mongo
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-});
+mongoose.connect(DB_URL, DB_CONFIG);
 
-// подключаем логгер запросов
+// парсер для собирания JSON-формата
+app.use(express.json());
+
+// логгер запросов
 app.use(requestLogger);
-app.use(errorLogger); // подключаем логгер ошибок
 
 // CORS настройка | для всех - app.use(cors()) | для выбранных - app.use(cors(corsOptions));
 app.use(cors()); // временное значение, изменить когда будет фронтенд
@@ -45,18 +31,11 @@ app.use(cors()); // временное значение, изменить ког
 app.use(helmet());
 app.use(limiter);
 
-// парсер для собирания JSON-формата
-app.use(express.json());
-
-// открытые роуты
-app.post('/signin', celebrate(validSetCreateUser), login); // роут для логина
-app.post('/signup', celebrate(validSetCreateUser), createUser); // роут для регистрации
-
-// авторизация
-app.use(auth);
-
-// роуты закрытые авторизацией
+// роуты
 app.use(routes);
+
+// логгер ошибок
+app.use(errorLogger);
 
 // обработка ошибок celebrate
 app.use(errors());
@@ -65,6 +44,6 @@ app.use(errors());
 app.use(myErrors);
 
 // слушаем порт
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+app.listen(APP_PORT, () => {
+  console.log(`App listening on port ${APP_PORT}`);
 });

@@ -1,8 +1,8 @@
 const whitelist = [
   'http://diploma.mihailov.nomoredomains.club',
   'https://diploma.mihailov.nomoredomains.club',
-  'http://localhost:3000',
-  'https://localhost:3000',
+  'http://localhost:3001',
+  'https://localhost:3001',
 ];
 
 const corsOptions = {
