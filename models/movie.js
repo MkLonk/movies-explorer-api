@@ -5,15 +5,14 @@ const movieSchema = new mongoose.Schema({
   country: { // страна создания фильма
     type: String,
     required: true, // обязательное поле
-    minlength: 2,
-    maxlength: 30,
+    maxlength: 255,
   },
 
   director: { // режиссёр фильма
     type: String,
     required: true, // обязательное поле
     minlength: 2,
-    maxlength: 30,
+    maxlength: 255,
   },
 
   duration: { // длительность фильма
@@ -32,7 +31,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true, // обязательное поле
     minlength: 2,
-    maxlength: 255,
+    maxlength: 2048,
   },
 
   image: { // ссылка на постер к фильму
@@ -77,14 +76,14 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true, // обязательное поле
     minlength: 2,
-    maxlength: 30,
+    maxlength: 255,
   },
 
   nameEN: { // название фильма на английском языке
     type: String,
     required: true, // обязательное поле
     minlength: 2,
-    maxlength: 30,
+    maxlength: 255,
   },
 });
 

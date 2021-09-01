@@ -35,17 +35,17 @@ const validSetPatchUser = {
 // сет валидации запросов CreateMovies
 const validSetCreateMovies = {
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(30),
-    director: Joi.string().required().min(2).max(30),
+    country: Joi.string().required().max(255),
+    director: Joi.string().required().min(2).max(255),
     duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(12),
-    description: Joi.string().required().min(2).max(255),
+    description: Joi.string().required().min(2).max(2048),
     image: Joi.string().required().custom(metodIsURL),
     trailer: Joi.string().required().custom(metodIsURL),
     thumbnail: Joi.string().required().custom(metodIsURL),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required().min(2).max(30),
-    nameEN: Joi.string().required().min(2).max(30),
+    nameRU: Joi.string().required().min(2).max(255),
+    nameEN: Joi.string().required().min(2).max(255),
   }),
 };
 
